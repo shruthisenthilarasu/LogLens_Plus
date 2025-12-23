@@ -17,6 +17,41 @@ LogLens++ processes log streams in real-time, extracting meaningful patterns, me
 - **DuckDB Storage**: Fast, embedded analytical database optimized for time-series queries
 - **Production-Ready CLI**: Professional command-line interface with rich output
 
+## How LogLens++ Compares
+
+| Feature | LogLens++ | Splunk | ELK Stack | CloudWatch |
+|---------|-----------|--------|-----------|------------|
+| **Setup time** | <5 min | Hours | Days | Vendor-managed |
+| **Cost** | Free (OSS) | $$$ | $$ | $$ |
+| **Scalability** | Single machine | Distributed | Distributed | Cloud-native |
+| **Use case** | Development/Small ops | Enterprise | Medium-large | AWS ecosystem |
+| **Deployment** | Embedded (single file) | Server-based | Cluster | SaaS |
+| **Learning curve** | Low | Medium | High | Low |
+| **SQL support** | ✅ Full SQL | Limited | Limited | Limited |
+| **Real-time** | ✅ Streaming | ✅ | ✅ | ✅ |
+| **Anomaly detection** | ✅ Built-in | ✅ (add-on) | ❌ (requires ML) | ✅ (Insights) |
+| **Configuration** | YAML | GUI/Config | JSON/YAML | Web UI |
+| **Data retention** | Configurable | Configurable | Configurable | Pay-per-GB |
+
+### When to Use LogLens++
+
+**Choose LogLens++ if you:**
+- Need quick setup and immediate results
+- Want zero-cost, open-source solution
+- Prefer SQL for querying (BI-friendly)
+- Need embedded deployment (no server setup)
+- Want declarative metrics (YAML configuration)
+- Are building internal tooling or prototypes
+- Need lightweight solution for development/staging
+
+**Consider alternatives if you:**
+- Need distributed processing at scale (>100M events/day)
+- Require enterprise features (RBAC, SSO, compliance)
+- Need vendor support and SLAs
+- Want managed service (CloudWatch, Datadog)
+- Require advanced ML-based anomaly detection
+- Need multi-tenant isolation
+
 ## Architecture
 
 LogLens++ follows a modular, pipeline-based architecture:
