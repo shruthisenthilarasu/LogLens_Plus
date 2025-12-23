@@ -1,0 +1,91 @@
+# LogLens++ Configuration Example
+# This file demonstrates all available configuration options
+
+# Default values for log ingestion
+default_source: myapp
+default_level: INFO
+
+# Storage configuration
+storage:
+  db_path: production.db
+  retention_days: 90  # Auto-delete events older than 90 days
+
+# Metrics definitions
+# Each metric specifies what to measure, how to filter, and how to aggregate
+metrics:
+  # Simple count metric
+  - name: error_count
+    filter: event.level in ('ERROR', 'CRITICAL', 'FATAL')
+    aggregation: count
+    window: 5m
+    description: Count of error-level events in last 5 minutes
+
+  # Rate metric
+  - name: error_rate
+    filter: event.level == 'ERROR'
+    aggregation: rate
+    window: 1m
+    description: Error rate per second
+
+  # Grouped metric - events by source
+  - name: events_by_source
+    filter: 'True'  # All events
+    aggregation: count
+    window: 15m
+    group_by: event.source
+    description: Event count grouped by source
+
+  # Grouped metric - events by level
+  - name: events_by_level
+    filter: 'True'
+    aggregation: count
+    window: 15m
+    group_by: event.level
+    description: Event count grouped by log level
+
+  # Metric with value extraction (if events have numeric metadata)
+  - name: avg_response_time
+    filter: 'response_time_ms' in event.metadata
+    aggregation: average
+    window: 5m
+    value_extractor: event.metadata.get('response_time_ms', 0)
+    description: Average response time in milliseconds
+
+  # Custom filter example
+  - name: api_errors
+    filter: event.source == 'api' and event.level == 'ERROR'
+    aggregation: count
+    window: 10m
+    description: API-specific error count
+
+# Anomaly detection configuration
+# Defines which metrics to monitor and alert thresholds
+anomalies:
+  # Monitor error count with standard threshold
+  - metric_name: error_count
+    window_size: 20      # Use last 20 samples for baseline
+    threshold: 2.0       # Flag if z-score >= 2.0
+    min_samples: 5       # Need at least 5 samples before detecting
+    enabled: true
+
+  # Monitor error rate with higher threshold (less sensitive)
+  - metric_name: error_rate
+    window_size: 30
+    threshold: 2.5
+    min_samples: 10
+    enabled: true
+
+  # Monitor response time
+  - metric_name: avg_response_time
+    window_size: 20
+    threshold: 2.0
+    min_samples: 5
+    enabled: true
+
+  # Disabled anomaly detection (example)
+  - metric_name: warning_count
+    window_size: 20
+    threshold: 2.0
+    min_samples: 5
+    enabled: false  # Disabled
+
