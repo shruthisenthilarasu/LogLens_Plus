@@ -52,6 +52,45 @@ LogLens++ processes log streams in real-time, extracting meaningful patterns, me
 - Require advanced ML-based anomaly detection
 - Need multi-tenant isolation
 
+## Visual Examples
+
+### Dashboard Visualization
+
+LogLens++ includes a matplotlib-based dashboard for visualizing metrics and trends:
+
+```bash
+# Generate sample data and create dashboard
+python examples/dashboard.py --generate-data
+
+# This creates dashboard.png with:
+# - Error rate trends over time
+# - Events distribution by level (pie chart)
+# - Top sources by event count
+# - Error rate by source
+# - Metric trends visualization
+```
+
+![Dashboard Example](examples/dashboard.png)
+
+The dashboard provides a comprehensive view of your log analytics with multiple chart types optimized for different insights.
+
+### Workflow Demonstration
+
+See the complete workflow in action (ingestion → query → anomaly detection):
+
+```bash
+# Run the workflow demo
+python examples/workflow_demo.py
+
+# This demonstrates:
+# 1. Ingestion: Reading and parsing log files
+# 2. Metrics: Computing aggregations and storing results
+# 3. Querying: SQL queries and time-bucketed analysis
+# 4. Anomaly Detection: Identifying spikes and drops
+```
+
+The workflow demo can be recorded as a GIF or video to show the end-to-end process. See [examples/README.md](examples/README.md) for instructions on creating visual recordings.
+
 ## Architecture
 
 LogLens++ follows a modular, pipeline-based architecture:
@@ -173,9 +212,17 @@ Tested on M1 MacBook Pro, 16GB RAM:
 ### Install from Source
 
 ```bash
-git clone <repository-url>
-cd loglens_plus
+git clone https://github.com/shruthisenthilarasu/LogLens_Plus.git
+cd LogLens_Plus/loglens_plus
 pip install -e .
+```
+
+### Optional Dependencies
+
+For dashboard visualizations:
+
+```bash
+pip install matplotlib
 ```
 
 ### Development Setup
